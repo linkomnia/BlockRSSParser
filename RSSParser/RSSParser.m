@@ -138,8 +138,12 @@ static dispatch_queue_t rssparser_success_callback_queue() {
             [formatter setLocale:local];
           
             [formatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss Z"];
-            
-            [currentItem setPubDate:[formatter dateFromString:tmpString]];
+            NSDate *date = [formatter dateFromString:tmpString];
+            if (date == nil) {
+                [formatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss z"];
+                date = [formatter dateFromString:tmpString];
+            }
+            [currentItem setPubDate:date];
         }
 
         if ([elementName isEqualToString:@"dc:creator"]) {
