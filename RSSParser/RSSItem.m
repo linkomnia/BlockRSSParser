@@ -14,7 +14,9 @@
 
 @end
 
-@implementation RSSItem
+@implementation RSSItem {
+    NSMutableArray *_enclosureImages;
+}
 
 -(NSArray *)imagesFromItemDescription
 {
@@ -32,6 +34,11 @@
     }
     
     return nil;
+}
+
+- (NSArray *)imagesFromEnclosure
+{
+    return _enclosureImages;
 }
 
 #pragma mark - retrieve images from html string using regexp (private methode)
@@ -108,6 +115,16 @@
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"<%@: %@>", [self class], [self.title stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]];
+}
+
+#pragma mark -
+
+- (void)addImageFromEnclosure:(NSString *)imageURL
+{
+    if (!_enclosureImages) {
+        _enclosureImages = [NSMutableArray arrayWithCapacity:1];
+    }
+    [_enclosureImages addObject:imageURL];
 }
 
 @end
