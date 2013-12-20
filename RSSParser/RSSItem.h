@@ -23,5 +23,8 @@
 
 -(NSArray *)imagesFromItemDescription;
 -(NSArray *)imagesFromContent;
+-(NSArray *)imagesFromEnclosure;
+
+- (void)addImageFromEnclosure:(NSString *)imageURL;
 
 @end

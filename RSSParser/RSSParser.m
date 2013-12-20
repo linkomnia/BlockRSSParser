@@ -70,6 +70,14 @@
         currentItem = [[RSSItem alloc] init];
     }
     
+    if ([elementName isEqualToString:@"enclosure"] && currentItem) {
+        NSString *url = attributeDict[@"url"];
+        NSString *type = attributeDict[@"type"];
+        if (url && [type hasPrefix:@"image/"]) {
+            [currentItem addImageFromEnclosure:url];
+        }
+    }
+    
     tmpString = [[NSMutableString alloc] init];
     
 }
