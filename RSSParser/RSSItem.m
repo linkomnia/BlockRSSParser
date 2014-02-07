@@ -106,12 +106,12 @@
     if (![object isKindOfClass:[self class]]) {
         return NO;
     }
-    return [self.link.absoluteString isEqualToString:object.link.absoluteString];
+    return [self.guid isEqualToString:object.guid];
 }
 
 - (NSUInteger)hash
 {
-    return [self.link hash];
+    return [self.guid hash];
 }
 
 - (NSString *)description
