@@ -79,6 +79,7 @@
         _pubDate = [aDecoder decodeObjectForKey:@"pubDate"];
         _author = [aDecoder decodeObjectForKey:@"author"];
         _guid = [aDecoder decodeObjectForKey:@"guid"];
+		_enclosureImages = [aDecoder decodeObjectForKey:@"enclosureImages"];
     }
     return self;
 }
@@ -95,6 +96,7 @@
     [aCoder encodeObject:self.pubDate forKey:@"pubDate"];
     [aCoder encodeObject:self.author forKey:@"author"];
     [aCoder encodeObject:self.guid forKey:@"guid"];
+	[aCoder encodeObject:_enclosureImages forKey:@"enclosureImages"];
 }
 
 #pragma mark -
