@@ -111,7 +111,7 @@ static dispatch_queue_t rssparser_success_callback_queue() {
     }
     if (currentItem != nil && tmpString != nil) {
         
-        if ([elementName isEqualToString:@"title"]) {
+        if ([elementName isEqualToString:@"title"] && [currentItem.title length] == 0) {
             [currentItem setTitle:tmpString];
         }
         
@@ -123,15 +123,15 @@ static dispatch_queue_t rssparser_success_callback_queue() {
             [currentItem setContent:tmpString];
         }
         
-        if ([elementName isEqualToString:@"link"]) {
+        if ([elementName isEqualToString:@"link"] && [tmpString length] > 0) {
             [currentItem setLink:[NSURL URLWithString:tmpString]];
         }
         
-        if ([elementName isEqualToString:@"comments"]) {
+        if ([elementName isEqualToString:@"comments"] && [tmpString length] > 0) {
             [currentItem setCommentsLink:[NSURL URLWithString:tmpString]];
         }
         
-        if ([elementName isEqualToString:@"wfw:commentRss"]) {
+        if ([elementName isEqualToString:@"wfw:commentRss"] && [tmpString length] > 0) {
             [currentItem setCommentsFeed:[NSURL URLWithString:tmpString]];
         }
         
