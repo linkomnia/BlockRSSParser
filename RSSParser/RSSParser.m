@@ -100,6 +100,13 @@ static dispatch_queue_t rssparser_success_callback_queue() {
         }
     }
 
+    if ([elementName isEqualToString:@"link"]) {
+        NSString *href = attributeDict[@"href"];
+        if (href) {
+            [currentItem setLink:[NSURL URLWithString:href]];
+        }
+    }
+
     tmpString = [[NSMutableString alloc] init];
     
 }
