@@ -94,8 +94,8 @@ static dispatch_queue_t rssparser_success_callback_queue() {
 
     if ([elementName isEqualToString:@"media:content"]) {
         NSString *url = attributeDict[@"url"];
-        NSString *type = attributeDict[@"type"];
-        if (url && [type hasPrefix:@"image/"]) {
+        NSString *medium = attributeDict[@"medium"];
+        if (url && [medium isEqualToString:@"image"]) {
             [currentItem addImageFromEnclosure:url];
         }
     }
