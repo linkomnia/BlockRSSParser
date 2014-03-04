@@ -139,16 +139,20 @@ static dispatch_queue_t rssparser_success_callback_queue() {
             [currentItem setCommentsCount:[NSNumber numberWithInt:[tmpString intValue]]];
         }
         
-        if ([elementName isEqualToString:@"pubDate"]) {
+        if ([elementName isEqualToString:@"pubDate"] || [elementName isEqualToString:@"published"]) {
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 
             NSLocale *local = [[NSLocale alloc] initWithLocaleIdentifier:@"en_EN"];
             [formatter setLocale:local];
-          
+
             [formatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss Z"];
             NSDate *date = [formatter dateFromString:tmpString];
             if (date == nil) {
                 [formatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss z"];
+                date = [formatter dateFromString:tmpString];
+            }
+            if (date == nil) {
+                [formatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'sszzz"];
                 date = [formatter dateFromString:tmpString];
             }
             [currentItem setPubDate:date];
