@@ -146,7 +146,7 @@ static dispatch_queue_t rssparser_success_callback_queue() {
             [currentItem setCommentsCount:[NSNumber numberWithInt:[tmpString intValue]]];
         }
         
-        if ([elementName isEqualToString:@"pubDate"] || [elementName isEqualToString:@"published"]) {
+        if ([elementName isEqualToString:@"pubDate"] || [elementName isEqualToString:@"published"] || [elementName isEqualToString:@"dc:date"]) {
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 
             NSLocale *local = [[NSLocale alloc] initWithLocaleIdentifier:@"en_EN"];
@@ -174,7 +174,7 @@ static dispatch_queue_t rssparser_success_callback_queue() {
         }
     }
     
-    if ([elementName isEqualToString:@"rss"] || [elementName isEqualToString:@"feed"]) {
+    if ([elementName isEqualToString:@"rss"] || [elementName isEqualToString:@"feed"] || [elementName isEqualToString:@"rdf:RDF"]) {
         block(items);
     }
     
