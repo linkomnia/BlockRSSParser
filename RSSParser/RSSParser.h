@@ -27,5 +27,7 @@
                        success:(void (^)(NSArray *feedItems))success
                        failure:(void (^)(NSError *error))failure;
 
++ (void)cancelAllOperations;
+- (void)cancelAllOperations;
 
 @end

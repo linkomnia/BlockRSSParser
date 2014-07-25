@@ -7,6 +7,7 @@
 //
 
 #import "RSSParser.h"
+#import <AFHTTPClient.h>
 
 static dispatch_queue_t rssparser_success_callback_queue() {
     static dispatch_queue_t parser_success_callback_queue;
@@ -19,6 +20,16 @@ static dispatch_queue_t rssparser_success_callback_queue() {
 }
 
 @implementation RSSParser
+
++ (AFHTTPClient *)sharedClient
+{
+    static AFHTTPClient *client = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        client = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://www.apple.com"]];
+    });
+    return client;
+}
 
 #pragma mark lifecycle
 - (id)init {
@@ -59,8 +70,7 @@ static dispatch_queue_t rssparser_success_callback_queue() {
     }];
 
     [operation setSuccessCallbackQueue:rssparser_success_callback_queue()];
-
-    [operation start];
+    [[[self class] sharedClient] enqueueHTTPRequestOperation:operation];
 }
 
 #pragma mark -
@@ -187,5 +197,16 @@ static dispatch_queue_t rssparser_success_callback_queue() {
 }
 
 #pragma mark -
+#pragma mark Cancel
+
++ (void)cancelAllOperations
+{
+    [[self sharedClient].operationQueue cancelAllOperations];
+}
+
+- (void)cancelAllOperations
+{
+    [[[self class] sharedClient].operationQueue cancelAllOperations];
+}
 
 @end
