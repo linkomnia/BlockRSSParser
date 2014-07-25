@@ -63,8 +63,11 @@ static dispatch_queue_t rssparser_success_callback_queue() {
     AFXMLRequestOperation *operation = [RSSParser XMLParserRequestOperationWithRequest:urlRequest success:^(NSURLRequest *request, NSHTTPURLResponse *response, NSXMLParser *XMLParser) {
         [XMLParser setDelegate:self];
         [XMLParser parse];
-        
-
+        NSError *error = [XMLParser parserError];
+        if (error) {
+            NSLog(@"RSS parse error: %@", error);
+        }
+        block(items);
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, NSXMLParser *XMLParse) {
         failure(error);
     }];
@@ -125,6 +128,7 @@ static dispatch_queue_t rssparser_success_callback_queue() {
 {    
     if ([elementName isEqualToString:@"item"] || [elementName isEqualToString:@"entry"]) {
         [items addObject:currentItem];
+        currentItem = nil;
     }
     if (currentItem != nil && tmpString != nil) {
         
@@ -185,7 +189,6 @@ static dispatch_queue_t rssparser_success_callback_queue() {
     }
     
     if ([elementName isEqualToString:@"rss"] || [elementName isEqualToString:@"feed"] || [elementName isEqualToString:@"rdf:RDF"]) {
-        block(items);
     }
     
 }

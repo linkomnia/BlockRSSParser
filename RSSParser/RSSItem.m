@@ -50,16 +50,13 @@
 
     // first extract <img> tags
     NSRange range = NSMakeRange(0, htmlstr.length);
-
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"<img\\s[^>]*src=[\"']([^\"']*)"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
-
     [regex enumerateMatchesInString:htmlstr options:0 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
         [imagesURLStringArray addObject:[htmlstr substringWithRange:[result rangeAtIndex:1]]];
     }];
 
-    // then get any URLs that look like links to images
     regex = [NSRegularExpression regularExpressionWithPattern:@"(https?)\\S*(png|jpg|jpeg|gif)"
                                                       options:NSRegularExpressionCaseInsensitive
                                                         error:&error];
