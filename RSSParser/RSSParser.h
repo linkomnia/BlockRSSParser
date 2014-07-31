@@ -10,21 +10,14 @@
 #import "AFXMLRequestOperation.h"
 #import "RSSItem.h"
 
-@interface RSSParser : AFXMLRequestOperation <NSXMLParserDelegate> {
-    RSSItem *currentItem;
-    NSMutableArray *items;
-    NSMutableString *tmpString;
-    void (^block)(NSArray *feedItems);
-}
-
-
+@interface RSSParser : AFXMLRequestOperation <NSXMLParserDelegate>
 
 + (void)parseRSSFeedForRequest:(NSURLRequest *)urlRequest
-                       success:(void (^)(NSArray *feedItems))success
+                       success:(void (^)(NSString *feedTitle, NSString *feedIconURL, NSArray *feedItems))success
                        failure:(void (^)(NSError *error))failure;
 
 - (void)parseRSSFeedForRequest:(NSURLRequest *)urlRequest
-                       success:(void (^)(NSArray *feedItems))success
+                       success:(void (^)(NSString *feedTitle, NSString *feedIconURL, NSArray *feedItems))success
                        failure:(void (^)(NSError *error))failure;
 
 + (void)cancelAllOperations;
